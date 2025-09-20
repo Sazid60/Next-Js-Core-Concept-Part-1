@@ -1,5 +1,5 @@
 import Image from "next/image";
-import nextImg from "../../../assets/31343C.svg" // for local 
+import nextImg from "@/assets/31343C.svg" // for local 
 const GalleryPage = () => {
     return (
         <div className="text-center">
