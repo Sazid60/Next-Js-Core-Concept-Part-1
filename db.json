@@ -1,0 +1,124 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "product_name": "Aegis Pro 15",
+      "category": "Laptop",
+      "brand": "PowerCore",
+      "price": 1999,
+      "image": "https://picsum.photos/seed/laptop1/400/300"
+    },
+    {
+      "id": "2",
+      "product_name": "Nimbus X1",
+      "category": "Smartphone",
+      "brand": "Skyline",
+      "price": 899,
+      "image": "https://picsum.photos/seed/phone2/400/300"
+    },
+    {
+      "id": "3",
+      "product_name": "Pulse Studio Over-Ear",
+      "category": "Headphones",
+      "brand": "SoundRipple",
+      "price": 149,
+      "image": "https://picsum.photos/seed/headphones3/400/300"
+    },
+    {
+      "id": "4",
+      "product_name": "Verta 27\" IPS",
+      "category": "Monitor",
+      "brand": "Viewark",
+      "price": 329,
+      "image": "https://picsum.photos/seed/monitor4/400/300"
+    },
+    {
+      "id": "5",
+      "product_name": "Quill Mechanical",
+      "category": "Keyboard",
+      "brand": "KeyCrafters",
+      "price": 119,
+      "image": "https://picsum.photos/seed/keyboard5/400/300"
+    },
+    {
+      "id": "6",
+      "product_name": "SwiftTrack Pro",
+      "category": "Mouse",
+      "brand": "GlideWorks",
+      "price": 59,
+      "image": "https://picsum.photos/seed/mouse6/400/300"
+    },
+    {
+      "id": "7",
+      "product_name": "Bolt NVMe 1TB",
+      "category": "SSD",
+      "brand": "FlashForge",
+      "price": 129,
+      "image": "https://picsum.photos/seed/ssd7/400/300"
+    },
+    {
+      "id": "8",
+      "product_name": "Halo AX6000",
+      "category": "Router",
+      "brand": "NetPulse",
+      "price": 199,
+      "image": "https://picsum.photos/seed/router8/400/300"
+    },
+    {
+      "id": "9",
+      "product_name": "SlatePad 10",
+      "category": "Tablet",
+      "brand": "Tabra",
+      "price": 449,
+      "image": "https://picsum.photos/seed/tablet9/400/300"
+    },
+    {
+      "id": "10",
+      "product_name": "Orion Mirrorless",
+      "category": "Camera",
+      "brand": "LumaTech",
+      "price": 1199,
+      "image": "https://picsum.photos/seed/camera10/400/300"
+    },
+    {
+      "id": "11",
+      "product_name": "Tempo Classic",
+      "category": "Smartwatch",
+      "brand": "Wristly",
+      "price": 199,
+      "image": "https://picsum.photos/seed/watch11/400/300"
+    },
+    {
+      "id": "12",
+      "product_name": "InkJet Pro M404",
+      "category": "Printer",
+      "brand": "Printiva",
+      "price": 179,
+      "image": "https://picsum.photos/seed/printer12/400/300"
+    },
+    {
+      "id": "13",
+      "product_name": "ArcLight Desk Lamp",
+      "category": "Accessory",
+      "brand": "LumiDesk",
+      "price": 39,
+      "image": "https://picsum.photos/seed/lamp13/400/300"
+    },
+    {
+      "id": "14",
+      "product_name": "Guardian UPS 1500VA",
+      "category": "Power",
+      "brand": "EnerSafe",
+      "price": 259,
+      "image": "https://picsum.photos/seed/ups14/400/300"
+    },
+    {
+      "id": "15",
+      "product_name": "CineRing LED Panel",
+      "category": "Lighting",
+      "brand": "ProLite",
+      "price": 89,
+      "image": "https://picsum.photos/seed/light15/400/300"
+    }
+  ]
+}
