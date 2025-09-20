@@ -527,3 +527,38 @@ const ProductsPage = async () => {
 
 export default ProductsPage;
 ```
+
+## 52-5 Explain SSG by Next-level Data Fetching
+- now lets see the caching while fetching. we will use `forced-cache`. this will store the caching like a `cdn` after first load. 
+- another facility is in the `build` time  it will generate htm with the fetched data and user will get the content instantly 
+
+```tsx 
+import ProductCard from '@/components/products/ProductCard';
+import { IProduct } from '@/type';
+import React from 'react';
+
+const ProductsPage = async () => {
+    const res = await fetch("http://localhost:5000/products", {
+        cache : "force-cache"
+    })
+    const products = await res.json();
+
+    console.log(products)
+
+    return (
+        <div>
+            <h1 className='text-center'>All Products!</h1>
+
+            <div className='grid grid-cols-3 gap-4 w-[90%] mx-auto'>
+                {
+                    products.map((product : IProduct)=>(<ProductCard key={product?.id} product={product}/>))
+                }
+            </div>
+        </div>
+    );
+};
+
+export default ProductsPage;
+```
+- while doing build `npm run build` we have to keep the server running. 
+- `npm start`

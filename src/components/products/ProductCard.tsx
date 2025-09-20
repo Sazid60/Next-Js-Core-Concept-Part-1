@@ -6,7 +6,7 @@ import Image from "next/image"
 
 export default function ProductCard({ product }: { product: IProduct }) {
   return (
-    <div className="rounded-2xl shadow-md p-4 bg-white hover:shadow-xl transition">
+    <div className="rounded-2xl shadow-md p-4 hover:shadow-xl transition border">
       <div className="relative w-full h-48">
         <Image
           src={product.image}
