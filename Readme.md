@@ -318,3 +318,22 @@ import nextImg from "../../../assets/31343C.svg"
 ```
 import nextImg from "@/assets/31343C.svg"
 ```
+
+## 52-3 Explain core concept of pre-rendering (SSG + SSR)
+
+![alt text](image-1.png)
+
+- pre rendering performance optimization is done by using static site generation (ssg) and server side rendering(ssr) 
+
+### SSG- Static Site Generation 
+- when we build a project and then we host the project maybe in vercel
+- In the initial state of deployment we make a `build` folder 
+- Next.js makes the static content `HTML` bundle in the build time and the files are deployed in hosting server  
+- when we hit a route, from the hosting server the html content will come to browser and will be shown to user 
+
+### Server side rendering 
+- In the same way project is build and hosted in hosting server. 
+- Suppose user want to see a dynamic data like post whose id is 1 (dynamic). 
+- first user will hit then server will take the request and search in database 
+- when data is found the database will send it to server and server will generate html file using the data info and then will send to the user as response. 
+- both SSG and SSR is handled by server but SSG is faster than ssr since in ssg the data is static and already made in build time.  
