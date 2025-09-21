@@ -620,4 +620,176 @@ const res = await fetch("http://localhost:5000/products", {
   },
 });
 ```
-- this is better to use tags so that less network is used.  
+
+- this is better to use tags so that less network is used.
+
+## 52-7 Advance Data Fetching Strategies with SSR
+
+```tsx
+const res = await fetch("http://localhost:5000/products", {
+  cache: "no-store",
+});
+```
+
+- the purpose of `no-store` is based on the user request html file will b ebuild in server and then come to us. It will not generate html file in `build time`. Thi is called server side rendering
+
+![alt text](image-2.png)
+
+- as it will take time while loading we can show loading state.
+- in static site generation there is no chance to show the loading state by the way as user will be getting instant.
+- In case of ISR is also same as SSR and ISR is almost same. works done in build time.
+
+#### Lets show loading state
+
+- app -> (commonLayout) - > products -> loading.tsx
+
+```tsx
+const ProductsLoadingPage = () => {
+  return (
+    <div className="min-h-dvh flex justify-center items-center">
+      <h1>Loading.........</h1>
+    </div>
+  );
+};
+
+export default ProductsLoadingPage;
+```
+
+```tsx
+import ProductCard from "@/components/products/ProductCard";
+import { IProduct } from "@/type";
+import React from "react";
+
+const ProductsPage = async () => {
+  const res = await fetch("http://localhost:5000/products", {
+    cache: "no-store",
+  });
+  const products = await res.json();
+
+  console.log(products);
+
+  return (
+    <div>
+      <h1 className="text-center">All Products!</h1>
+
+      <div className="grid grid-cols-3 gap-4 w-[90%] mx-auto">
+        {products.map((product: IProduct) => (
+          <ProductCard key={product?.id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ProductsPage;
+```
+
+- If we want to show the loading screen where some data fetch is done we can create the loading.tsx in home page directory as well
+
+- app -> (commonLayout) - > products -> error.tsx
+
+```tsx
+"use client";
+const ErrorPage = () => {
+  return (
+    <div>
+      <h1 className="text-center text-red-500 text-xl">Something went wrong</h1>
+    </div>
+  );
+};
+
+export default ErrorPage;
+```
+
+- Error boundaries will be based on the products error.
+- Do not forget to convert into client component
+
+- Lets make the error page dynamic
+
+```tsx
+"use client";
+
+import { useEffect } from "react";
+
+const ErrorPage = ({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) => {
+  useEffect(() => {
+    // Log the error to an error reporting service
+    console.error(error);
+  }, [error]);
+  return (
+    <div>
+      <h1 className="text-center text-red-500 text-xl">Something went wrong</h1>
+      <p>{error?.message}</p>
+
+      <button
+        onClick={() => reset()}
+        className="mt-3 w-full bg-blue-500 text-white py-2 rounded-xl hover:bg-blue-600 mx-auto"
+      >
+        Try Again
+      </button>
+    </div>
+  );
+};
+
+export default ErrorPage;
+```
+
+- reset button will be used if any error occurs.
+
+## 52-9 Handling Active Links in Next.js
+
+```tsx
+"use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React from "react";
+
+export default function Navbar() {
+  const pathname = usePathname();
+
+  const links = [
+    { href: "/dashboard", label: "Dashboard" },
+    { href: "/products", label: "Products" },
+    { href: "/about", label: "About" },
+    { href: "/gallery", label: "Gallery" },
+    { href: "/contact", label: "Contact" },
+    { href: "/login", label: "Login" },
+  ];
+
+  return (
+    <nav className="w-full bg-gray-900 text-white px-6 py-3 flex items-center justify-between">
+      {/* Logo / Brand */}
+      <div className="text-xl font-bold">
+        <Link href="/">NextJs</Link>
+      </div>
+
+      {/* Links */}
+      <div className="flex space-x-6">
+        {links.map((link) => {
+          const isActive = pathname === link.href;
+
+          return (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`${
+                isActive
+                  ? "text-yellow-400 font-semibold border-b-2 border-yellow-400"
+                  : "hover:text-gray-300"
+              }`}
+            >
+              {link.label}
+            </Link>
+          );
+        })}
+      </div>
+    </nav>
+  );
+}
+```
