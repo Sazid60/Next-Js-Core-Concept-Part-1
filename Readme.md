@@ -477,11 +477,11 @@ npm i json-server
     }
   ]
 }
-
 ```
-- as our frontend is running in port 3000 we will run the dummy server in different . lets add a script for it 
 
-```json 
+- as our frontend is running in port 3000 we will run the dummy server in different . lets add a script for it
+
+```json
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
@@ -491,74 +491,133 @@ npm i json-server
   },
 ```
 
-- now run 
+- now run
 
 ```
 npm run json-server
 ```
 
-### Now Lets see data fetching in next.js 
-- next.js provides fetch method 
+### Now Lets see data fetching in next.js
+
+- next.js provides fetch method
 - and data fetching will be done in only `server component` and the component must be converted in `async component`
 
-```tsx 
-import ProductCard from '@/components/products/ProductCard';
-import { IProduct } from '@/type';
-import React from 'react';
+```tsx
+import ProductCard from "@/components/products/ProductCard";
+import { IProduct } from "@/type";
+import React from "react";
 
 const ProductsPage = async () => {
-    const res = await fetch("http://localhost:5000/products")
-    const products = await res.json();
+  const res = await fetch("http://localhost:5000/products");
+  const products = await res.json();
 
-    console.log(products)
+  console.log(products);
 
-    return (
-        <div>
-            <h1 className='text-center'>All Products!</h1>
+  return (
+    <div>
+      <h1 className="text-center">All Products!</h1>
 
-            <div className='grid grid-cols-3 gap-4 w-[90%] mx-auto'>
-                {
-                    products.map((product : IProduct)=>(<ProductCard key={product?.id} product={product}/>))
-                }
-            </div>
-        </div>
-    );
+      <div className="grid grid-cols-3 gap-4 w-[90%] mx-auto">
+        {products.map((product: IProduct) => (
+          <ProductCard key={product?.id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default ProductsPage;
 ```
 
 ## 52-5 Explain SSG by Next-level Data Fetching
-- now lets see the caching while fetching. we will use `forced-cache`. this will store the caching like a `cdn` after first load. 
-- another facility is in the `build` time  it will generate htm with the fetched data and user will get the content instantly 
 
-```tsx 
-import ProductCard from '@/components/products/ProductCard';
-import { IProduct } from '@/type';
-import React from 'react';
+- now lets see the caching while fetching. we will use `forced-cache`. this will store the caching like a `cdn` after first load.
+- another facility is in the `build` time it will generate htm with the fetched data and user will get the content instantly
+
+```tsx
+import ProductCard from "@/components/products/ProductCard";
+import { IProduct } from "@/type";
+import React from "react";
 
 const ProductsPage = async () => {
-    const res = await fetch("http://localhost:5000/products", {
-        cache : "force-cache"
-    })
-    const products = await res.json();
+  const res = await fetch("http://localhost:5000/products", {
+    cache: "force-cache",
+  });
+  const products = await res.json();
 
-    console.log(products)
+  console.log(products);
 
-    return (
-        <div>
-            <h1 className='text-center'>All Products!</h1>
+  return (
+    <div>
+      <h1 className="text-center">All Products!</h1>
 
-            <div className='grid grid-cols-3 gap-4 w-[90%] mx-auto'>
-                {
-                    products.map((product : IProduct)=>(<ProductCard key={product?.id} product={product}/>))
-                }
-            </div>
-        </div>
-    );
+      <div className="grid grid-cols-3 gap-4 w-[90%] mx-auto">
+        {products.map((product: IProduct) => (
+          <ProductCard key={product?.id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default ProductsPage;
 ```
-- while doing build `npm run build` we have to keep the server running. 
+
+- while doing build `npm run build` we have to keep the server running.
 - `npm start`
+
+## 52-6 Breaking the Limits of Static Sites with Next.js ISR
+
+- For static method once the static html is generated further changes in Html do not reflect in Ui. For showing the new data we have to rebuild and redeploy again.
+- Next.js has solve this using `Incremental Static Regeneration(ISR)`. This will call the fetch method after some time interval amd if any data changes it will rebuild and redeploy. This is Done automatically.
+
+```tsx
+const res = await fetch("http://localhost:5000/products", {
+  next: {
+    revalidate: 5,
+  },
+});
+```
+
+```tsx
+import ProductCard from "@/components/products/ProductCard";
+import { IProduct } from "@/type";
+import React from "react";
+
+const ProductsPage = async () => {
+  const res = await fetch("http://localhost:5000/products", {
+    next: {
+      revalidate: 5,
+    },
+  });
+  const products = await res.json();
+
+  console.log(products);
+
+  return (
+    <div>
+      <h1 className="text-center">All Products!</h1>
+
+      <div className="grid grid-cols-3 gap-4 w-[90%] mx-auto">
+        {products.map((product: IProduct) => (
+          <ProductCard key={product?.id} product={product} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ProductsPage;
+```
+
+- which ever fetch data changes will be revalidated (ISR) and changed after 5 second
+- we can re validate tags as well
+
+```tsx
+const res = await fetch("http://localhost:5000/products", {
+  next: {
+    tags: ["products"],
+  },
+});
+```
+- this is better to use tags so that less network is used.  
